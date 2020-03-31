@@ -3,7 +3,8 @@
 ## 代码架构
 
 src/client: 发送方  
-src/server: 接收方
+src/server: 接收方   
+doc: 文档
 
 ## 版本一
 
