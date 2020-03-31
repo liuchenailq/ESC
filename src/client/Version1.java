@@ -9,7 +9,7 @@ import java.net.Socket;
  * @author LiuChen
  * @date 2020/3/30
  */
-public class Main {
+public class Version1 {
     public static void main(String[] args){
         long startTime = System.currentTimeMillis();
 
@@ -27,16 +27,13 @@ public class Main {
             BufferedReader fbr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
             String line = "";
-            int lineCount = 0;
             while ((line = fbr.readLine()) != null){
-                lineCount ++;
                 String tmp = calc(line);
                 if(tmp != null){
                     bw.write(tmp + "\r\n");
                     bw.flush();
                 }
             }
-            System.out.println(lineCount + " 行");
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -5,11 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
+ * 接受一行，写入文件
  * 接收方入口
  * @author LiuChen
  * @date 2020/3/30
  */
-public class Main {
+public class Version1 {
     public static void main(String[] args){
         int port = 1234;
         try {
