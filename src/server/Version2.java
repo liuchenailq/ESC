@@ -40,12 +40,12 @@ public class Version2 {
                     fbw.newLine();
                 }
 
-                if(stopFlag){
-                    break;
-                }
+//                if(stopFlag){
+//                    break;
+//                }
                 socket.close();
             }
-            fbw.close();
+//            fbw.close();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -38,9 +38,8 @@ public class Version2 {
         ArrayBlockingQueue<Runnable> arrayBlockingQueue = new ArrayBlockingQueue<>(corePoolSize);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, corePoolSize, 0L, TimeUnit.MILLISECONDS, arrayBlockingQueue, new CustomRejectedExecutionHandler());
 
-
         String line = "";
-        int batchSize = 100000;
+        int batchSize = 200000;
         while (line != null){
             ArrayList<String> arrayList = new ArrayList<>(batchSize);
             int batch = 0;
