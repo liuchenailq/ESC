@@ -27,12 +27,27 @@ public class Version1 {
             BufferedReader fbr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
             String line = "";
+            int pkCount = 5;  // 一次发送的行数
+            int count = 0;
+            StringBuilder sb = new StringBuilder();
             while ((line = fbr.readLine()) != null){
                 String tmp = calc(line);
                 if(tmp != null){
-                    bw.write(tmp + "\r\n");
-                    bw.flush();
+                    if(count == pkCount){
+                        sb.append(tmp);
+                        bw.write(sb.toString() + "\r\n");
+                        bw.flush();
+                        sb.delete(0, sb.length());
+                        count = 0;
+                    }else {
+                        count ++;
+                        sb.append(tmp + ";");
+                    }
                 }
+            }
+            if(sb.length() > 0){
+                bw.write(sb.toString() + "\r\n");
+                bw.flush();
             }
             socket.close();
         } catch (IOException e) {

@@ -17,15 +17,16 @@ public class Version1 {
             ServerSocket serverSocket = new ServerSocket(port);
             Socket socket = null;
 
-            File outputfile = new File("/root/exam/result.txt");
-            if(!outputfile.exists()){
-                outputfile.getParentFile().mkdirs();
-                outputfile.createNewFile();
-            }
-            BufferedWriter fbw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputfile)));
-
             while(true) {
                 socket = serverSocket.accept();
+
+                File outputfile = new File("/root/exam/result.txt");
+                if(!outputfile.exists()){
+                    outputfile.getParentFile().mkdirs();
+                    outputfile.createNewFile();
+                }
+                BufferedWriter fbw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputfile)));
+
 
                 InputStream ips = socket.getInputStream();
                 InputStreamReader ipsr = new InputStreamReader(ips);
@@ -33,10 +34,11 @@ public class Version1 {
 
                 String s = "";
                 while((s = br.readLine()) != null) {
-                    fbw.write(s);
-                    fbw.newLine();
+                    for(String t : s.split(";")){
+                        fbw.write(t);
+                        fbw.newLine();
+                    }
                 }
-
                 fbw.close();
                 socket.close();
             }

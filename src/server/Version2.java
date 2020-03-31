@@ -36,8 +36,10 @@ public class Version2 {
                 boolean stopFlag = s.equals("yes") ? true : false;
 
                 while((s = br.readLine()) != null) {
-                    fbw.write(s);
-                    fbw.newLine();
+                    for(String t : s.split(";")){
+                        fbw.write(t);
+                        fbw.newLine();
+                    }
                 }
 
 //                if(stopFlag){
