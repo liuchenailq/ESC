@@ -14,6 +14,18 @@ import java.util.ArrayList;
 public class Task implements Runnable {
     ArrayList<String> arrayList;
     boolean stopFlag = false;
+    int seq = -1;
+    String ip;
+    int port;
+
+    public Task(ArrayList<String> arrayList, boolean stopFlag, int seq, String ip, int port){
+        this.arrayList = arrayList;
+        this.stopFlag = stopFlag;
+        this.seq = seq;
+        this.ip = ip;
+        this.port = port;
+    }
+
     public Task(ArrayList<String> arrayList, boolean stopFlag){
         this.arrayList = arrayList;
         this.stopFlag = stopFlag;
@@ -21,9 +33,6 @@ public class Task implements Runnable {
 
     @Override
     public void run() {
-        String ip = "39.108.67.176";
-        int port = 1234;
-
         try {
             Socket socket = new Socket(ip, port);
 
@@ -36,6 +45,11 @@ public class Task implements Runnable {
                 bw.flush();
             }else {
                 bw.write( "no\r\n");
+                bw.flush();
+            }
+
+            if(seq != -1){
+                bw.write( seq + "\r\n");
                 bw.flush();
             }
 

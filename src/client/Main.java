@@ -8,11 +8,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 单线程读取文件、多线程处理并发送
  * @author LiuChen
- * @date 2020/3/30
+ * @date 2020/4/1
  */
-public class Version2 {
+public class Main {
 
     /**
      * 阻塞策略
@@ -29,15 +28,23 @@ public class Version2 {
     }
 
     public static void main(String[] args) throws IOException {
-        long startTime = System.currentTimeMillis();
+        if(args.length != 3){
+            System.out.println("filepath ip port");
+            return;
+        }
 
-        File file = new File("/liuchen/input_data.txt");
+        File file = new File(args[0]);
+        if(!file.exists()){
+            System.out.println(args[0] + " file no exist!!!");
+            return;
+        }
         BufferedReader fbr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
         int corePoolSize = 2;
         ArrayBlockingQueue<Runnable> arrayBlockingQueue = new ArrayBlockingQueue<>(corePoolSize);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, corePoolSize, 0L, TimeUnit.MILLISECONDS, arrayBlockingQueue, new CustomRejectedExecutionHandler());
 
+        int seq = 1;  // 序号
         String line = "";
         int batchSize = 200000;
         while (line != null){
@@ -47,12 +54,13 @@ public class Version2 {
                 arrayList.add(line);
                 batch ++;
             }
+
             // 调用线程处理并发送
             boolean stopFlag = line == null ? true : false;
-            Task task = new Task(arrayList, stopFlag);
+            Task task = new Task(arrayList, stopFlag, seq, args[1], Integer.parseInt(args[2]));
             threadPoolExecutor.submit(task);
+            seq ++;
         }
-
-        System.out.println("总耗时： " + (System.currentTimeMillis() - startTime) / 1000 + " 秒");
     }
+
 }
